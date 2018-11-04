@@ -1,0 +1,15 @@
+{
+  "name": "code-clicker",
+  "version": "1.0.0",
+  "description": "Idle clicker game with a coding theme.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Potter",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "normalize.css": "^8.0.0"
+  }
+}

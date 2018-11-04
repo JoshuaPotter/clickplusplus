@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,700");
+@import 'normalize.css';
+body {
+  margin: 0;
+  padding: 80px 150px;
+  background: #507DB8;
+  color: #e0e2e4;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: "Roboto Mono", monospace;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+
+#window {
+  background: #21282D;
+  height: calc(100vh - 160px);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 22px 40px -4px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+#window nav {
+  background: #ececec;
+  color: #21282D;
+  padding: 6px 4px;
+  position: relative;
+}
+#window nav a {
+  padding: 2px;
+  opacity: 0.75;
+  font-size: 12px;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+#window nav a:first-of-type {
+  margin-left: 6px;
+}
+#window nav a:hover {
+  opacity: 1;
+}
+#window nav .circles {
+  position: absolute;
+  top: 12px;
+  right: 10px;
+  width: 100px;
+}
+#window nav .circles .circle {
+  width: 12px;
+  height: 12px;
+  background: #afafaf;
+  border-radius: 100%;
+  margin: 0 4px;
+  float: right;
+}
+#window nav .circles .circle:first-of-type {
+  background: #2AC940;
+  border: 1px solid #219f33;
+}
+#window nav .circles .circle:nth-of-type(2) {
+  background: #ffbe2f;
+  border: 1px solid #fbad00;
+}
+#window nav .circles .circle:last-of-type {
+  background: #FB5D56;
+  border: 1px solid #cd0d05;
+}
+#window #messages {
+  position: relative;
+  padding: 4px;
+  overflow-y: scroll;
+  height: calc(100% - 35px - 8px);
+  cursor: pointer;
+}
+#window #messages p {
+  margin: 2px;
+}
+#window #messages p strong {
+  font-weight: 700;
+  color: #e784a2;
+}
+#window #messages p span.output {
+  color: #7d8c93;
+  font-weight: 700;
+  font-family: monospace;
+}
+#window #messages p span.green {
+  color: #2AC940;
+}
+#window #messages p span.red {
+  color: #FB5D56;
+}
+#window #messages.click-region {
+  cursor: pointer;
+}
+#window #messages.click-region:active {
+  opacity: 0.85;
+}
+
+/*# sourceMappingURL=style.css.map */
