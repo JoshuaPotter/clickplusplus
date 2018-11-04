@@ -1,11 +1,18 @@
-
 // Player object
 class Player {
    constructor() {
+      this.playerAdjective = adj[Math.floor(Math.random() * Math.floor(adj.length))];
+      this.playerNoun = noun[Math.floor(Math.random() * Math.floor(noun.length))];
       this.playerPoints = 0;
       this.playerLevel = 1;
       this.playerAutoClickStatus = false;
       this.playerAutoClick;
+   }
+   get adjective() {
+      return this.playerAdjective;
+   }
+   get noun() {
+      return this.playerNoun;
    }
    get level() {
       return this.playerLevel;
@@ -24,27 +31,27 @@ class Player {
    }
    set autoClick(newAutoClick) {
       if(newAutoClick == true && this.playerAutoClickStatus == false) {
-         appendMessage("<span class='green'>Enabling AutoCode</span>");
+         appendMessage(this, "<span class='green'>Enabling AutoCode</span>");
          let t = this;
-         this.playerAutoClick = setInterval(function() {
+         t.playerAutoClick = setInterval(function() {
             t.addPoint();
-            appendMessage("Lines of code: <strong>" + t.points + "</strong>");
-         }, 1000);
+            appendMessage(t, "Lines of code: <strong>" + t.points + "</strong>");
+         }, 250);
       } else if (newAutoClick == false) {
-         appendMessage("<span class='red'>Disabling AutoCode</span>");
+         appendMessage(this, "<span class='red'>Disabling AutoCode</span>");
          clearInterval(this.playerAutoClick);
       }
       this.playerAutoClickStatus = newAutoClick;
    }
    addLevel() {
       this.level += 1;
-      appendMessage("You leveled up! Level: " + this.level);
+      appendMessage(this, "You leveled up! Level: " + this.level);
    }
    addPoint() {
       this.points += 1;
 
       // level = constant * sqrt(xp)
-      let newLevel = .42 * Math.sqrt(this.points);
+      let newLevel = .42/2 * Math.sqrt(this.points);
       if(newLevel > this.level) {
          this.addLevel();
       }
@@ -54,23 +61,18 @@ class Player {
 $(document).ready(function() {
    // Main
    let p = new Player();
+   init(p, "Hello, World!");
+   appendMessage(p, "Click to start programming...");
 
-   init(p, "Lines of code: <strong>" + p.points + "</strong>");
-
+   // Events
    $('.click-region').click(function() {
       p.addPoint();
-      
-      // Enable autoclick at level 4
-      // if(p.level == 3) {
-      //    $('.autoclick').show()
-      //    p.autoClick = true;
-      // }
-      appendMessage("Lines of code: <strong>" + p.points + "</strong>");
+      appendMessage(p, "Lines of code: <strong>" + p.points + "</strong>");
    });
 
    $('.clear').click(function(e) {
       e.preventDefault();
-      clearMessages();
+      clearMessages(p);
    });
 
    $('.autoclick').click(function() {
@@ -86,17 +88,23 @@ $(document).ready(function() {
 });
 
 function init(p, welcome) {
-   // Player object, welcome message
    console.log("Running...");
-   appendMessage(welcome);
+   appendMessage(p, welcome);
 }
 
-function appendMessage(message, window = $('#messages')) {
-   window.append("<p><span class='output'>&gt;&gt;</span> " + message + "</p>");
-   $('#messages').scrollTop($('#messages').prop("scrollHeight"));
+function appendMessage(p, message, window = $('#messages')) {
+   let parentNode = document.getElementById("messages");
+   if(parentNode.hasChildNodes()) {
+      // start removing messages at the top of stack
+      if(parentNode.childNodes.length > 100) {
+         parentNode.removeChild(parentNode.childNodes[0]);
+      }
+   }
+   window.append("<p><!--<span class='output'>&gt;&gt;</span> --><span class='yellow'>$" + p.adjective + p.noun + "</span> <span class='output'>>></span> " + message + "</p>");
+   window.scrollTop(window.prop("scrollHeight"));
 }
 
-function clearMessages(window = $('#messages')) {
+function clearMessages(p, window = $('#messages')) {
    window.html("");
-   appendMessage("clear()");
+   appendMessage(p, "clear()");
 }

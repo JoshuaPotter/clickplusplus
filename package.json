@@ -9,6 +9,7 @@
   "author": "Joshua Potter",
   "license": "ISC",
   "dependencies": {
+    "adjectives": "^1.0.2",
     "express": "^4.16.4",
     "normalize.css": "^8.0.0"
   }

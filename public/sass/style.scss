@@ -2,9 +2,9 @@
 $desktop-bg: #507DB8;
 $window-bg: #21282D;
 $text: #e0e2e4;
-$pink: #e784a2;
-$red: #FB5D56;
-$blue: #85b5c7;
+$pink: #fc9bb8;
+$red: #eb3c33;
+$blue: #4c75e6;
 $green: #2AC940;
 $gray: #7d8c93;
 $yellow: #ffbe2f;
@@ -27,10 +27,11 @@ body {
 
 #window {
    background: $window-bg;
-   height: calc(100vh - 160px);
+   height: calc(100vh - 162px);
    border-radius: 4px;
    overflow: hidden;
-   box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 22px 40px -4px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
+   box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 40px -4px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
+   border: 1px solid rgb(236, 236, 236);
 
    nav {
       background: #ececec;
@@ -71,15 +72,15 @@ body {
 
             &:first-of-type {
                background: $green;
-               border: 1px solid darken($green, 10%);
+               border: 1px solid darken($green, 12%);
             }
             &:nth-of-type(2) {
                background: $yellow;
-               border: 1px solid darken($yellow, 10%);
+               border: 1px solid darken($yellow, 15%);
             }
             &:last-of-type {
                background: $red;
-               border: 1px solid darken($red, 25%);
+               border: 1px solid darken($red, 22%);
             }
          }
       }
@@ -87,7 +88,7 @@ body {
 
    #messages {
       position: relative;
-      padding: 4px;
+      padding: 4px 10px;
       overflow-y: scroll;
       height: calc(100% - 35px - 8px);
       cursor: pointer;
@@ -110,6 +111,9 @@ body {
             }
             &.red {
                color: $red;
+            }
+            &.yellow {
+               color: $yellow;
             }
          }
       }
