@@ -11,8 +11,14 @@ class Player {
    get adjective() {
       return this.playerAdjective;
    }
+   set adjective(newAdj) {
+      this.playerAdjective = newAdj;
+   }
    get noun() {
       return this.playerNoun;
+   }
+   set noun(newNoun) {
+      this.playerNoun = newNoun;
    }
    get level() {
       return this.playerLevel;
@@ -45,7 +51,7 @@ class Player {
    }
    addLevel() {
       this.level += 1;
-      appendMessage(this, "You leveled up! Level: " + this.level);
+      appendMessage(this, "<span class='green'>You leveled up! Level: " + this.level + "</span>");
    }
    addPoint() {
       this.points += 1;
@@ -96,7 +102,7 @@ function appendMessage(p, message, window = $('#messages')) {
    let parentNode = document.getElementById("messages");
    if(parentNode.hasChildNodes()) {
       // start removing messages at the top of stack
-      if(parentNode.childNodes.length > 100) {
+      if(parentNode.childNodes.length > 150) {
          parentNode.removeChild(parentNode.childNodes[0]);
       }
    }
