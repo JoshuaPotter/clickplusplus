@@ -1,4 +1,6 @@
 # Code Clicker
+### Requirements
+* Node.js
 ## Getting Started
 Run `node install` in the root directory to install the dependencies
 ## Start The Server
