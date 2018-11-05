@@ -5,6 +5,7 @@ class Player {
       this.playerNoun = noun[Math.floor(Math.random() * Math.floor(noun.length))];
       this.playerPoints = 0;
       this.playerLevel = 1;
+      this.playerClickRate = 1;
       this.playerAutoClickStatus = false;
       this.playerAutoClick;
    }
@@ -20,17 +21,23 @@ class Player {
    set noun(newNoun) {
       this.playerNoun = newNoun;
    }
+   get points() {
+      return this.playerPoints;
+   }
+   set points(newPoints) {
+      this.playerPoints = newPoints;
+   }
    get level() {
       return this.playerLevel;
    }
    set level(newLevel) {
       this.playerLevel = newLevel;
    }
-   get points() {
-      return this.playerPoints;
+   get clickRate() {
+      return this.playerClickRate;
    }
-   set points(newPoints) {
-      this.playerPoints = newPoints;
+   set clickRate(newClickRate) {
+      this.playerClickRate = newClickRate;
    }
    get autoClick() {
       return this.playerAutoClickStatus;
@@ -49,18 +56,22 @@ class Player {
       }
       this.playerAutoClickStatus = newAutoClick;
    }
-   addLevel() {
-      this.level += 1;
-      appendMessage(this, "<span class='green'>You leveled up! Level: " + this.level + "</span>");
-   }
    addPoint() {
-      this.points += 1;
+      this.points += this.clickRate;
 
       // level = constant * sqrt(xp)
       let newLevel = .42/2 * Math.sqrt(this.points);
       if(newLevel > this.level) {
          this.addLevel();
       }
+   }
+   addLevel() {
+      this.level += 1;
+      appendMessage(this, "<span class='green'>You leveled up! Level: " + this.level + "</span>");
+   }
+   addClickRate() {
+      this.clickRate += 1;
+      appendMessage(this, "<span class='green'>Click rate increased! +" + this.clickRate + " per click.</span>")
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -78,12 +89,17 @@ class Player {
          this.noun = p.playerNoun;
          this.points = p.playerPoints;
          this.level = p.playerLevel;
+         this.clickRate = p.playerClickRate;
          this.autoClick = p.playerAutoClickStatus;
          return true;
       } else {
          // no previous session found
          return false;
       }
+   }
+   exportSave() {
+      let save = 'data:application/json;charset=utf-8,'+ encodeURIComponent(JSON.stringify(this));
+      return save;
    }
 }
 
@@ -117,13 +133,30 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
+   $('#export').click(function(e) {
+      let exportSave = document.createElement('a');
+      exportSave.style.visibility = "hidden";
+      exportSave.setAttribute('href', p.exportSave());
+      exportSave.setAttribute('download', 'code-clicker-save.json');
+      document.body.appendChild(exportSave);
+      exportSave.click();
+      appendMessage(p, "<span class='green'>Downloading save file.</span>");
+      document.body.removeChild(exportSave);
+   });
+
    $('.clear').click(function(e) {
       e.preventDefault();
       clearMessages(p);
       appendMessage(p, "<span class='green'>Window cleared.</span>");
    });
+   
+   $('.clickrate').click(function(e) {
+      e.preventDefault();
+      p.addClickRate();
+   });
 
-   $('.autoclick').click(function() {
+   $('.autoclick').click(function(e) {
+      e.preventDefault();
       if(p.autoClick) {
          p.autoClick = false;
          appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
@@ -131,7 +164,7 @@ $(document).ready(function() {
          p.autoClick = true;
          appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
       }
-   })
+   });
 
 });
 
