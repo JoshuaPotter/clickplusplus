@@ -37,14 +37,14 @@ class Player {
    }
    set autoClick(newAutoClick) {
       if(newAutoClick == true && this.playerAutoClickStatus == false) {
-         appendMessage(this, "<span class='green'>Enabling AutoCode</span>");
+         $('.autoclick').html('AutoCode (✔)');
          let t = this;
          t.playerAutoClick = setInterval(function() {
             t.addPoint();
             appendMessage(t, "Lines of code: <strong>" + t.points + "</strong>");
          }, 250);
       } else if (newAutoClick == false) {
-         appendMessage(this, "<span class='red'>Disabling AutoCode</span>");
+         $('.autoclick').html('AutoCode');
          clearInterval(this.playerAutoClick);
       }
       this.playerAutoClickStatus = newAutoClick;
@@ -62,18 +62,55 @@ class Player {
          this.addLevel();
       }
    }
+   saveToLocal() {
+      localStorage.setItem("player", JSON.stringify(this));
+      console.log(localStorage.getItem("player"));
+      console.log("Session saved.");
+   }
+   loadFromLocal() {
+      if(localStorage.player) {
+         console.log("Loading previous session.");
+         let p = JSON.parse(localStorage.getItem("player"));
+         console.log(p);
+         this.adjective = p.playerAdjective;
+         this.noun = p.playerNoun;
+         this.points = p.playerPoints;
+         this.level = p.playerLevel;
+         this.autoClick = p.playerAutoClickStatus;
+         return true;
+      } else {
+         console.log("Cannot load from localStorage.");
+         return false;
+      }
+   }
 }
 
 $(document).ready(function() {
    // Main
    let p = new Player();
    init(p, "Hello, World!");
-   appendMessage(p, "Click to start programming...");
 
    // Events
    $('.click-region').click(function() {
       p.addPoint();
       appendMessage(p, "Lines of code: <strong>" + p.points + "</strong>");
+   });
+
+   $('.new').click(function(e) {
+      e.preventDefault();
+
+      // create new player object and flush cache
+      localStorage.removeItem("player");
+      p = new Player();
+
+      // prepare new window
+      $('#messages').html("");
+      init(p, "Hello, World!");
+   });
+
+   $('.save').click(function(e) {
+      e.preventDefault();
+      p.saveToLocal();
    });
 
    $('.clear').click(function(e) {
@@ -84,10 +121,10 @@ $(document).ready(function() {
    $('.autoclick').click(function() {
       if(p.autoClick) {
          p.autoClick = false;
-         $('.autoclick').html('AutoCode');
+         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
       } else {
          p.autoClick = true;
-         $('.autoclick').html('AutoCode (✔)');
+         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
       }
    })
 
@@ -95,7 +132,12 @@ $(document).ready(function() {
 
 function init(p, welcome) {
    console.log("Running...");
-   appendMessage(p, welcome);
+   if(p.loadFromLocal()) {
+      appendMessage(p, "Welcome back, " + p.adjective + p.noun + ".");
+   } else {
+      appendMessage(p, welcome);
+   }
+   appendMessage(p, "Click to start programming...");
 }
 
 function appendMessage(p, message, window = $('#messages')) {
