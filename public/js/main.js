@@ -63,15 +63,17 @@ class Player {
       }
    }
    saveToLocal() {
+      // convert player object to string and save to localStorage
       localStorage.setItem("player", JSON.stringify(this));
       console.log(localStorage.getItem("player"));
       console.log("Session saved.");
    }
    loadFromLocal() {
       if(localStorage.player) {
+         // found previous session in localStorage
          console.log("Loading previous session.");
          let p = JSON.parse(localStorage.getItem("player"));
-         console.log(p);
+         
          this.adjective = p.playerAdjective;
          this.noun = p.playerNoun;
          this.points = p.playerPoints;
@@ -79,7 +81,7 @@ class Player {
          this.autoClick = p.playerAutoClickStatus;
          return true;
       } else {
-         console.log("Cannot load from localStorage.");
+         // no previous session found
          return false;
       }
    }
@@ -104,18 +106,21 @@ $(document).ready(function() {
       p = new Player();
 
       // prepare new window
-      $('#messages').html("");
+      clearMessages(p);
+      appendMessage(p, "<span class='green'>New game started.</span>");
       init(p, "Hello, World!");
    });
 
    $('.save').click(function(e) {
       e.preventDefault();
       p.saveToLocal();
+      appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
    $('.clear').click(function(e) {
       e.preventDefault();
       clearMessages(p);
+      appendMessage(p, "<span class='green'>Window cleared.</span>");
    });
 
    $('.autoclick').click(function() {
@@ -154,5 +159,4 @@ function appendMessage(p, message, window = $('#messages')) {
 
 function clearMessages(p, window = $('#messages')) {
    window.html("");
-   appendMessage(p, "clear()");
 }
