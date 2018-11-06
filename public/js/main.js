@@ -128,15 +128,18 @@ $(document).ready(function() {
 
    $('.new').click(function(e) {
       e.preventDefault();
+      let c = confirm("Starting a new game will delete your current progress.")
 
-      // create new player object and flush cache
-      localStorage.removeItem("player");
-      p = new Player();
+      if(c) {
+         // create new player object and flush cache
+         localStorage.removeItem("player");
+         p = new Player();
 
-      // prepare new window
-      clearMessages(p);
-      appendMessage(p, "<span class='green'>New game started.</span>");
-      init(p, "Hello, World!");
+         // prepare new window
+         clearMessages(p);
+         appendMessage(p, "<span class='green'>New game started.</span>");
+         init(p, "Hello, World!");
+      }
    });
 
    $('.save').click(function(e) {

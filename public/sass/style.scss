@@ -1,7 +1,7 @@
 // Colors - http://color-themes.com/?view=theme&id=566065a4ddacef1b003edb63
 $desktop-bg: #507DB8;
 $window-bg: #21282D;
-$window-menu: #ececec;
+$window-menu: #e0e0e0;
 $text: #e0e2e4;
 $pink: #fc9bb8;
 $red: #eb3c33;
@@ -32,7 +32,7 @@ body {
    border-radius: 4px;
    overflow: hidden;
    box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 40px -4px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
-   border: 1px solid rgb(236, 236, 236);
+   border: 1px solid $window-menu;
 
    nav {
       background: $window-menu;
