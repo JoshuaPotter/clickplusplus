@@ -1,6 +1,7 @@
 // Colors - http://color-themes.com/?view=theme&id=566065a4ddacef1b003edb63
 $desktop-bg: #507DB8;
 $window-bg: #21282D;
+$window-menu: #ececec;
 $text: #e0e2e4;
 $pink: #fc9bb8;
 $red: #eb3c33;
@@ -34,7 +35,7 @@ body {
    border: 1px solid rgb(236, 236, 236);
 
    nav {
-      background: #ececec;
+      background: $window-menu;
       color: $window-bg;
       padding: 6px 4px;
       position: relative;
@@ -56,12 +57,21 @@ body {
             // display: none;
          }
       }
-      .circles {
+      .right {
          position: absolute;
          top: 10px;
          right: 10px;
-         width: 100px;
+         width: 200px;
 
+         .money {
+            margin: 0 8px;
+            float: right;
+            color: $green;
+            font-size: 12px;
+            position: relative;
+            top: -2px;
+            font-weight: 700;
+         }
          .circle {
             width: 12px;
             height: 12px;
@@ -70,7 +80,7 @@ body {
             margin: 0 4px;
             float: right;
 
-            &:first-of-type {
+            &:nth-of-type(1) {
                background: $green;
                border: 1px solid darken($green, 12%);
             }
@@ -78,7 +88,7 @@ body {
                background: $yellow;
                border: 1px solid darken($yellow, 15%);
             }
-            &:last-of-type {
+            &:nth-of-type(3) {
                background: $red;
                border: 1px solid darken($red, 22%);
             }
@@ -90,7 +100,7 @@ body {
       position: relative;
       padding: 4px 10px;
       overflow-y: scroll;
-      height: calc(100% - 35px - 8px);
+      height: calc(100% - 35px - 8px - 8px);
       cursor: pointer;
 
       p {
@@ -125,5 +135,10 @@ body {
             opacity: .85;
          }
       }
+   }
+
+   footer {
+      background: $window-menu;
+      height: 8px;
    }
 }

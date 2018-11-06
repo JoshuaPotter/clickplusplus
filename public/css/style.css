@@ -44,13 +44,22 @@ body {
 #window nav a:hover {
   opacity: 1;
 }
-#window nav .circles {
+#window nav .right {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 100px;
+  width: 200px;
 }
-#window nav .circles .circle {
+#window nav .right .money {
+  margin: 0 8px;
+  float: right;
+  color: #2AC940;
+  font-size: 12px;
+  position: relative;
+  top: -2px;
+  font-weight: 700;
+}
+#window nav .right .circle {
   width: 12px;
   height: 12px;
   background: #afafaf;
@@ -58,15 +67,15 @@ body {
   margin: 0 4px;
   float: right;
 }
-#window nav .circles .circle:first-of-type {
+#window nav .right .circle:nth-of-type(1) {
   background: #2AC940;
   border: 1px solid #1f9630;
 }
-#window nav .circles .circle:nth-of-type(2) {
+#window nav .right .circle:nth-of-type(2) {
   background: #ffbe2f;
   border: 1px solid #e29b00;
 }
-#window nav .circles .circle:last-of-type {
+#window nav .right .circle:nth-of-type(3) {
   background: #eb3c33;
   border: 1px solid #9e1710;
 }
@@ -74,7 +83,7 @@ body {
   position: relative;
   padding: 4px 10px;
   overflow-y: scroll;
-  height: calc(100% - 35px - 8px);
+  height: calc(100% - 35px - 8px - 8px);
   cursor: pointer;
 }
 #window #messages p {
@@ -103,6 +112,10 @@ body {
 }
 #window #messages.click-region:active {
   opacity: 0.85;
+}
+#window footer {
+  background: #ececec;
+  height: 8px;
 }
 
 /*# sourceMappingURL=style.css.map */
