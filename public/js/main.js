@@ -1,17 +1,5 @@
 // Player object
 class Player {
-   // Member Data
-   playerAdjective;
-   playerNoun;
-   playerPoints
-   playerLevel;
-   playerClickRate;
-   playerMoney;  
-   playerAutoClickStatus;
-   playerAutoClick;
-   playerSkills;
-
-   // Member Functions
    constructor() {
       // set name
       this.playerAdjective = adj[Math.floor(Math.random() * Math.floor(adj.length))];
@@ -31,6 +19,7 @@ class Player {
 
       // set autoclick
       this.playerAutoClickStatus = false;
+      this.playerAutoClick; // interval container
 
       // set playerskills
       this.playerSkills = {
@@ -43,6 +32,8 @@ class Player {
          css: false
       }
    }
+
+   // Getters & Setters
    get adjective() {
       return this.playerAdjective;
    }
@@ -97,6 +88,41 @@ class Player {
       }
       this.playerAutoClickStatus = newAutoClick;
    }
+
+   // Save & Load
+   load(p) {
+      this.adjective = p.playerAdjective;
+      this.noun = p.playerNoun;
+      this.points = p.playerPoints;
+      this.level = p.playerLevel;
+      this.clickRate = p.playerClickRate;
+      this.money = p.playerMoney;
+      this.autoClick = p.playerAutoClickStatus;
+   }
+   saveToLocal() {
+      // convert player object to string and save to localStorage
+      // optimize: only save if there are changes
+      localStorage.setItem("player", JSON.stringify(this));
+      console.log("Session saved.");
+   }
+   loadFromLocal() {
+      if(localStorage.player) {
+         // found previous session in localStorage
+         console.log("Loading previous session.");
+         let p = JSON.parse(localStorage.getItem("player"));
+         this.load(p);
+         return true;
+      } else {
+         // no previous session found
+         return false;
+      }
+   }
+   exportSave() {
+      let save = 'data:application/json;charset=utf-8,'+ encodeURIComponent(JSON.stringify(this));
+      return save;
+   }
+
+   // Increment Functions
    addPoint() {
       this.points += this.clickRate;
       this.money += this.clickRate/100;
@@ -114,35 +140,6 @@ class Player {
    addClickRate() {
       this.clickRate += 1;
       appendMessage(this, "<span class='green'>Click rate increased! +" + this.clickRate + " per click.</span>")
-   }
-   saveToLocal() {
-      // convert player object to string and save to localStorage
-      // optimize: only save if there are changes
-      localStorage.setItem("player", JSON.stringify(this));
-      console.log("Session saved.");
-   }
-   loadFromLocal() {
-      if(localStorage.player) {
-         // found previous session in localStorage
-         console.log("Loading previous session.");
-         let p = JSON.parse(localStorage.getItem("player"));
-         
-         this.adjective = p.playerAdjective;
-         this.noun = p.playerNoun;
-         this.points = p.playerPoints;
-         this.level = p.playerLevel;
-         this.clickRate = p.playerClickRate;
-         this.money = p.playerMoney;
-         this.autoClick = p.playerAutoClickStatus;
-         return true;
-      } else {
-         // no previous session found
-         return false;
-      }
-   }
-   exportSave() {
-      let save = 'data:application/json;charset=utf-8,'+ encodeURIComponent(JSON.stringify(this));
-      return save;
    }
 }
 
@@ -181,6 +178,22 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
+   $('.autoclick').click(function(e) {
+      e.preventDefault();
+      if(p.autoClick) {
+         p.autoClick = false;
+         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
+      } else {
+         p.autoClick = true;
+         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
+      }
+   });
+   
+   $('.clickrate').click(function(e) {
+      e.preventDefault();
+      p.addClickRate();
+   });
+
    // $('#export').click(function(e) {
    //    let exportSave = document.createElement('a');
    //    exportSave.style.visibility = "hidden";
@@ -197,22 +210,6 @@ $(document).ready(function() {
    //    clearMessages(p);
    //    appendMessage(p, "<span class='green'>Window cleared.</span>");
    // });
-   
-   $('.clickrate').click(function(e) {
-      e.preventDefault();
-      p.addClickRate();
-   });
-
-   $('.autoclick').click(function(e) {
-      e.preventDefault();
-      if(p.autoClick) {
-         p.autoClick = false;
-         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
-      } else {
-         p.autoClick = true;
-         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
-      }
-   });
 
 });
 
