@@ -1,14 +1,47 @@
 // Player object
 class Player {
+   // Member Data
+   playerAdjective;
+   playerNoun;
+   playerPoints
+   playerLevel;
+   playerClickRate;
+   playerMoney;  
+   playerAutoClickStatus;
+   playerAutoClick;
+   playerSkills;
+
+   // Member Functions
    constructor() {
+      // set name
       this.playerAdjective = adj[Math.floor(Math.random() * Math.floor(adj.length))];
       this.playerNoun = noun[Math.floor(Math.random() * Math.floor(noun.length))];
+
+      // set points
       this.playerPoints = 0;
+
+      // set level
       this.playerLevel = 1;
+
+      // set click rate
       this.playerClickRate = 1;
+
+      // set money
       this.playerMoney = 0;  
+
+      // set autoclick
       this.playerAutoClickStatus = false;
-      this.playerAutoClick;
+
+      // set playerskills
+      this.playerSkills = {
+         cplusplus: false,
+         java: false,
+         python: false,
+         php: false,
+         mysql: false,
+         html: false,
+         css: false
+      }
    }
    get adjective() {
       return this.playerAdjective;
@@ -113,8 +146,8 @@ class Player {
    }
 }
 
+// Main
 $(document).ready(function() {
-   // Main
    let p = new Player();
    let autoSave;
    init(p, autoSave, "Hello, World!");
