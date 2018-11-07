@@ -168,7 +168,7 @@ $(document).ready(function() {
          // prepare new window
          clearMessages(p);
          appendMessage(p, "<span class='green'>New game started.</span>");
-         init(p, "Hello, World!");
+         init(p, autoSave, "Hello, World!");
       }
    });
 
