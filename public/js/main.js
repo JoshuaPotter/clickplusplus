@@ -145,18 +145,26 @@ class Player {
 
 // Main
 $(document).ready(function() {
+   // create player object and autosave interval container
    let p = new Player();
    let autoSave;
+
+   // elements
+   let $clickregion = $('.click-region');
+   let $new = $('#new');
+   let $save = $('#save');
+
+   // start game
    init(p, autoSave, "Hello, World!");
 
-   // Events
-   $('.click-region').click(function() {
+   // user initialized events
+   $clickregion.click(function() {
       p.addPoint();
       printLines(p);
       updateMoney(p);
    });
 
-   $('.new').click(function(e) {
+   $new.click(function(e) {
       e.preventDefault();
       let c = confirm("Starting a new game will delete your current progress.")
 
@@ -172,27 +180,27 @@ $(document).ready(function() {
       }
    });
 
-   $('.save').click(function(e) {
+   $save.click(function(e) {
       e.preventDefault();
       p.saveToLocal();
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
-   $('.autoclick').click(function(e) {
-      e.preventDefault();
-      if(p.autoClick) {
-         p.autoClick = false;
-         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
-      } else {
-         p.autoClick = true;
-         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
-      }
-   });
+   // $('.autoclick').click(function(e) {
+   //    e.preventDefault();
+   //    if(p.autoClick) {
+   //       p.autoClick = false;
+   //       appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
+   //    } else {
+   //       p.autoClick = true;
+   //       appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
+   //    }
+   // });
    
-   $('.clickrate').click(function(e) {
-      e.preventDefault();
-      p.addClickRate();
-   });
+   // $('.clickrate').click(function(e) {
+   //    e.preventDefault();
+   //    p.addClickRate();
+   // });
 
    // $('#export').click(function(e) {
    //    let exportSave = document.createElement('a');

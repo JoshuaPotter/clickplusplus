@@ -7,7 +7,7 @@ const server = app.listen(port, () => console.log(`App listening on port ${port}
 
 app.use(compression());
 
-// assets
+// assetse
 app.use(express.static('public'));
 app.use('/js/jquery', express.static('node_modules/jquery/dist'));
 app.use('/css/normalize.css', express.static('node_modules/normalize.css'));

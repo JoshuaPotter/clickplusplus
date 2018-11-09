@@ -6,8 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
       <!-- style -->
-      <link href="css/normalize.css/normalize.css" rel="stylesheet">
-      <link href="css/style.css" rel="stylesheet">
+      <link href="css/normalize.css/normalize.css" rel="stylesheet" type="text/css">
+      <link href="css/style.css" rel="stylesheet" type="text/css">
 
       <!-- scripts -->
       <script src="js/jquery/jquery.min.js"></script>
@@ -16,15 +16,27 @@
 
       <title>Click++</title>
    </head>
-   <body>
+   <body class="osx-theme">
       <section id="window">
          <nav>
-            <a href="#" class="new">New</a>
-            <a href="#" class="save">Save</a>
-            <!-- <a href="#" id="export">Export</a> -->
-            <!-- <a href="#" class="clear">Clear</a> -->
+            <ul class="inline">
+               <li class="has-dropdown">
+                  <a href="#" id="menu">Menu</a>
+                  <div class="dropdown">
+                     <ul>
+                        <li><a href="#" id="new">New Game</a></li>
+                        <li><a href="#" id="save">Save</a></li>
+                     </ul>
+                  </div>
+               </li>
+               <li><a href="#" id="store">Store</a></li>
+            </ul>
+            <!-- <a href="#" class="new">New</a>
+            <a href="#" class="save">Save</a> -->
+            <!-- <a href="#" id="export">Export</a>
+            <a href="#" class="clear">Clear</a>
             <a href="#" class="autoclick">AutoCode</a>
-            <a href="#" class="clickrate">+1 Click</a>
+            <a href="#" class="clickrate">+1 Click</a> -->
             <div class="right">
                <div class="circle"></div>
                <div class="circle"></div>
