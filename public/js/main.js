@@ -23,7 +23,7 @@ class Player {
 
       // set playerskills
       this.playerSkills = {
-         cplusplus: false,
+         cplusplus: true, // always true, base skill
          java: false,
          python: false,
          php: false,
@@ -40,36 +40,42 @@ class Player {
    set adjective(newAdj) {
       this.playerAdjective = newAdj;
    }
+
    get noun() {
       return this.playerNoun;
    }
    set noun(newNoun) {
       this.playerNoun = newNoun;
    }
+
    get points() {
       return this.playerPoints;
    }
    set points(newPoints) {
       this.playerPoints = newPoints;
    }
+
    get level() {
       return this.playerLevel;
    }
    set level(newLevel) {
       this.playerLevel = newLevel;
    }
+
    get clickRate() {
       return this.playerClickRate;
    }
    set clickRate(newClickRate) {
       this.playerClickRate = newClickRate;
    }
+
    get money() {
       return this.playerMoney;
    }
    set money(newMoney) {
       this.playerMoney = newMoney;
    }
+
    get autoClick() {
       return this.playerAutoClickStatus;
    }
@@ -81,12 +87,19 @@ class Player {
             p.addPoint();
             printLines(p);
             updateMoney(p);
-         }, 250);
+         }, 5000);
       } else if (newAutoClick == false) {
          $('.autoclick').html('AutoCode');
          clearInterval(this.playerAutoClick);
       }
       this.playerAutoClickStatus = newAutoClick;
+   }
+
+   get skills() {
+      return this.playerSkills;
+   }
+   set skills(newSkills) {
+      this.playerSkills = newSkills;
    }
 
    // Save & Load
@@ -98,6 +111,7 @@ class Player {
       this.clickRate = p.playerClickRate;
       this.money = p.playerMoney;
       this.autoClick = p.playerAutoClickStatus;
+      this.skills = p.playerSkills;
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -125,7 +139,7 @@ class Player {
    // Increment Functions
    addPoint() {
       this.points += this.clickRate;
-      this.money += this.clickRate/100;
+      this.money += (this.clickRate/100) * this.skillModifier();
 
       // level = constant * sqrt(xp)
       let newLevel = .42/2 * Math.sqrt(this.points);
@@ -140,6 +154,18 @@ class Player {
    addClickRate() {
       this.clickRate += 1;
       appendMessage(this, "<span class='green'>Click rate increased! +" + this.clickRate + " per click.</span>")
+   }
+   skillModifier() {
+      // store modifier as member data when adding skill to increase efficiency
+      // instead of calculating it every time
+      let modifier = 0;
+      for(let key in this.skills) {
+         if(this.skills[key] == true) {
+            modifier++;
+            // console.log(key + " " + this.skills[key]);
+         }
+      }
+      return modifier;
    }
 }
 
