@@ -258,16 +258,16 @@ $(document).ready(function() {
       fr.readAsText(file);
    })
 
-   // $('.autoclick').click(function(e) {
-   //    e.preventDefault();
-   //    if(p.autoClick) {
-   //       p.autoClick = false;
-   //       appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
-   //    } else {
-   //       p.autoClick = true;
-   //       appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
-   //    }
-   // });
+   $('#autocode').click(function(e) {
+      e.preventDefault();
+      if(p.autoClick) {
+         p.autoClick = false;
+         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
+      } else {
+         p.autoClick = true;
+         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
+      }
+   });
    
    // $('.clickrate').click(function(e) {
    //    e.preventDefault();
@@ -334,7 +334,7 @@ function updateSkills(p) {
    let i = 1;
    for(let key in p.skills) {
       if(p.skills.hasOwnProperty(key)) {
-         let price = (Math.log(i)/2*2).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+         let price = (Math.log(i)/2*800).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
          let canAfford = (p.money < price) || p.skills[key];
          $('#skills').append('<li><a href="#" disabled="' + canAfford +'" skill="' + key + '">' + key + ' ($' + price + ')</a></li>')
          i++;

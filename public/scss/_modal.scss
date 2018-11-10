@@ -84,17 +84,27 @@
 
    h3 {
       font-size: 20px;
+      margin: 20px 0 0;
+      line-height: 1.4;
+      padding-top: 15px;
+      border-top: 1px solid #d4d4d4;
+      &:first-of-type {
+         border-top: 0;
+         padding-top: 0;
+         margin: 15px 0 0 0;
+      }
    }
 
    p {
-      margin: 0 0 10px;
+      margin: 0 0 20px;
       font-size: 14px;
    }
 
    ul {
-      margin: 20px -5px 0;
+      margin: 0 -5px 0;
       padding: 0;
       list-style-type: none;
+      width: 100%;
 
       li {
          margin: 0 5px 5px;
