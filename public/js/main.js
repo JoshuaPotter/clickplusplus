@@ -114,6 +114,8 @@ class Player {
       this.money = p.playerMoney;
       this.autoClick = p.playerAutoClickStatus;
       this.skills = p.playerSkills;
+      this.saveToLocal();
+      console.log('load', this);
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -233,6 +235,28 @@ $(document).ready(function() {
 
       appendMessage(p, "<span class='green'>Downloading save file.</span>");
    });
+
+   $('#import-input').on('change', function() {
+      let file = this.files[0];
+      if(!file) {
+         return false;
+      }
+
+      let fr = new FileReader();
+
+      fr.onload = function(e) {
+         let result = JSON.parse(e.target.result);
+         console.log("imported file", result);
+         p.load(result);
+
+         // prepare new window
+         clearMessages(p);
+         init(p, autoSave, "Welcome back, " + p.adjective + p.noun + ".");
+         modal.close('#import-modal');
+      }
+
+      fr.readAsText(file);
+   })
 
    // $('.autoclick').click(function(e) {
    //    e.preventDefault();
