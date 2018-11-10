@@ -2,10 +2,10 @@
 ### Requirements
 * Node.js
 
-## Getting Started
+## Setup
 Run `node install` in the root directory to install the dependencies
 
-## Start The Server
+## Getting Started
 Run `node app.js` in the root directory to launch the application
 
 Run `gulp watch` for live view
