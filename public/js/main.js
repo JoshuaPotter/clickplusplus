@@ -22,14 +22,16 @@ class Player {
       this.playerAutoClick; // interval container
 
       // set playerskills
+      // ordered by price, low to high
       this.playerSkills = {
-         cplusplus: true, // always true, base skill
-         java: false,
-         python: false,
-         php: false,
-         mysql: false,
-         html: false,
-         css: false
+         "HTML": true, // always true, base skill
+         "CSS": false,
+         "JavaScript": false,
+         "Python": false,
+         "PHP": false,
+         "MySQL": false,
+         "C++": false, 
+         "Java": false,
       }
    }
 
@@ -189,6 +191,7 @@ $(document).ready(function() {
       p.addPoint();
       printLines(p);
       updateMoney(p);
+      updateSkills(p);
    });
 
    $new.click(function(e) {
@@ -271,6 +274,9 @@ function init(p, autoSave, welcome) {
       p.saveToLocal();
    }, 30000);
 
+   // initialize store
+   updateSkills(p);
+
    console.log("Running...");
    appendMessage(p, "Click to start programming...");
 }
@@ -297,4 +303,17 @@ function printLines(p) {
 
 function updateMoney(p) {
    $('.money').html("$" + p.money.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+}
+
+function updateSkills(p) {
+   $('#skills').html('');
+   let i = 1;
+   for(let key in p.skills) {
+      if(p.skills.hasOwnProperty(key)) {
+         let price = (Math.log(i)/2*2).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+         let canAfford = (p.money < price) || p.skills[key];
+         $('#skills').append('<li><a href="#" disabled="' + canAfford +'">' + key + ' ($' + price + ')</a></li>')
+         i++;
+      }
+   }
 }
