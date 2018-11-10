@@ -62,12 +62,67 @@
    opacity: 0;
    transform: scale(0);
    transition: opacity 0.2s, transform 0.2s, z-index 0s 0.2s;
+   padding:  5px 25px 20px;
+   min-width: 300px;
+
+   h2 {
+      font-size: 36px;
+      color: #1d1d1d;
+      font-family: sans-serif;
+      margin: 20px 0 10px;
+      line-height: 1;
+   }
+
+   h3,
+   p {
+      color: #838383;
+      line-height: 1.4;
+      margin: 0;
+   }
+
+   h3 {
+      font-size: 20px;
+   }
+
+   p {
+      margin: 0 0 15px;
+      font-size: 12px;
+   }
+
+   ul {
+      margin: 0 -5px;
+      padding: 0;
+      list-style-type: none;
+
+      li {
+         margin: 0 5px 5px;
+         width: calc(50% - 10px);
+         float: left;
+
+         a {
+            display: block;
+            padding: 5px 8px;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #838383;
+            color: #838383;
+            text-decoration: none;
+
+            &:hover {
+               border-color: #1d1d1d;
+               color: #1d1d1d;
+            }
+         }
+      }
+   }
 }
-.modal-visible .modal-inner {
-   z-index: 100;
-   opacity: 1;
-   transform: scale(1);
-   transition: opacity 0.2s, transform 0.2s;
+.modal-visible {
+   .modal-inner {
+      z-index: 100;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.2s, transform 0.2s;
+   }
 }
 
 [data-modal-close] {
