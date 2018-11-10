@@ -27,6 +27,7 @@
                         <li><a href="#" id="new">New Game</a></li>
                         <li><a href="#" id="save">Save</a></li>
                         <li><a href="#" id="export">Export Save</a></li>
+                        <li><a href="#import-modal" id="import" data-modal-open>Import Save</a></li>
                      </ul>
                   </div>
                </li>
@@ -49,6 +50,16 @@
 
          </div>
       </section>
+
+      <!-- Upload Save -->
+      <div id="import-modal" class="modal-hider">
+         <h2>Import Save</h2>
+         <p>Upload your save file to resume your game.</p>
+         <form>
+            <!-- <label for="file-upload">Click to upload</label> -->
+            <input id="file-upload" type="file" name="savefile" />
+         </form>
+      </div>
 
       <!-- Store Modal Content -->
       <div id="store-modal" class="modal-hider">

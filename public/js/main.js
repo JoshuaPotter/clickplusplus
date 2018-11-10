@@ -312,7 +312,7 @@ function updateSkills(p) {
       if(p.skills.hasOwnProperty(key)) {
          let price = (Math.log(i)/2*2).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
          let canAfford = (p.money < price) || p.skills[key];
-         $('#skills').append('<li><a href="#" disabled="' + canAfford +'">' + key + ' ($' + price + ')</a></li>')
+         $('#skills').append('<li><a href="#" disabled="' + canAfford +'" skill="' + key + '">' + key + ' ($' + price + ')</a></li>')
          i++;
       }
    }

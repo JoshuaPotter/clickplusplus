@@ -126,6 +126,19 @@
          }
       }
    }
+   form {
+      background: lighten($window-menu, 2%);
+      padding:  8px 10px;
+      color: #1d1d1d;
+
+      label,
+      input {
+         display: block;
+      }
+      label {
+         margin-bottom: 5px;
+      }
+   }
 }
 .modal-visible {
    .modal-inner {
