@@ -9,8 +9,9 @@ app.use(compression());
 
 // assetse
 app.use(express.static('public'));
-app.use('/js/jquery', express.static('node_modules/jquery/dist'));
-app.use('/css/normalize.css', express.static('node_modules/normalize.css'));
+app.use('/js', express.static('node_modules/jquery/dist'));
+app.use('/js/modal', express.static('node_modules/vanilla-modal/dist'));
+app.use('/css', express.static('node_modules/normalize.css'));
 
 app.get('/', function(req, res) { 
    res.send(__dirname + '/' + 'index.html');

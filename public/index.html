@@ -6,11 +6,11 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
       <!-- style -->
-      <link href="css/normalize.css/normalize.css" rel="stylesheet" type="text/css">
+      <link href="css/normalize.css" rel="stylesheet" type="text/css">
       <link href="css/style.css" rel="stylesheet" type="text/css">
 
       <!-- scripts -->
-      <script src="js/jquery/jquery.min.js"></script>
+      <script src="js/jquery.min.js"></script>
       <script src="js/names.js"></script>
       <script src="js/main.js" async></script>
 
@@ -26,10 +26,11 @@
                      <ul>
                         <li><a href="#" id="new">New Game</a></li>
                         <li><a href="#" id="save">Save</a></li>
+                        <li><a href="#" id="export">Export Save</a></li>
                      </ul>
                   </div>
                </li>
-               <li><a href="#" id="store">Store</a></li>
+               <li><a href="#store-modal" id="store" data-modal-open>Store</a></li>
             </ul>
             <!-- <a href="#" class="new">New</a>
             <a href="#" class="save">Save</a> -->
@@ -47,9 +48,23 @@
          <div id="messages" class="click-region">
 
          </div>
-         <footer>
-
-         </footer>
       </section>
+
+      <!-- Store Modal Content -->
+      <div id="store-modal" class="modal-hider">
+         <h2>Store</h2>
+      </div>
+
+      <!-- Modal Template -->
+      <div class="modal">
+         <div class="modal-inner">
+            <a data-modal-close>x</a>
+            <div class="modal-content"></div>
+         </div>
+      </div>
+
+      <!-- vanilla-modal.js -->
+      <script src="js/modal/index.js"></script>
+      <script>var modal = new VanillaModal.default({loadClass:'modal-scope'});</script>
    </body>
 </html>

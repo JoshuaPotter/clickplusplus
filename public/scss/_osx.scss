@@ -1,0 +1,111 @@
+body {
+   &.osx-theme {
+      #window {
+         background: $window-bg;
+         height: calc(100vh - 162px);
+         border-radius: 4px;
+         overflow: hidden;
+         box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 40px -4px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
+         border: 1px solid $window-menu;
+      
+         nav {
+            padding: 0 5px;
+            background: $window-menu;
+            color: $window-bg;
+            position: relative;
+            z-index: 3;
+      
+            a {
+               opacity: .75;
+               font-size: 12px;
+               text-decoration: none;
+               color: inherit;
+               &:hover {
+                  opacity: 1;
+               }
+               &.autoclick {
+                  // display: none;
+               }
+            }
+            .right {
+               position: absolute;
+               top: 10px;
+               right: 10px;
+               width: 200px;
+      
+               .money {
+                  margin: 0 8px;
+                  float: right;
+                  color: $green;
+                  font-size: 12px;
+                  position: relative;
+                  top: -2px;
+                  font-weight: 700;
+               }
+               .circle {
+                  width: 12px;
+                  height: 12px;
+                  background: #afafaf;
+                  border-radius: 100%;
+                  margin: 0 4px;
+                  float: right;
+      
+                  &:nth-of-type(1) {
+                     background: $green;
+                     border: 1px solid darken($green, 12%);
+                  }
+                  &:nth-of-type(2) {
+                     background: $yellow;
+                     border: 1px solid darken($yellow, 15%);
+                  }
+                  &:nth-of-type(3) {
+                     background: $red;
+                     border: 1px solid darken($red, 22%);
+                  }
+               }
+            }
+         }
+      
+         #messages {
+            position: relative;
+            padding: 4px 10px;
+            overflow-y: scroll;
+            height: calc(100% - 35px - 8px - 8px);
+            cursor: pointer;
+      
+            p {
+               margin: 2px;
+               
+               strong {
+                  font-weight: 700;
+                  color: $pink;
+               }
+               span {
+                  &.output {
+                     color: $gray;
+                     font-weight: 700;
+                     font-family: monospace;
+                  }
+                  &.green {
+                     color: $green;
+                  }
+                  &.red {
+                     color: $red;
+                  }
+                  &.yellow {
+                     color: $yellow;
+                  }
+               }
+            }
+      
+            &.click-region {
+               cursor: pointer;
+               
+               &:active {
+                  opacity: .85;
+               }
+            }
+         }
+      }
+   }
+}

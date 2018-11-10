@@ -179,6 +179,7 @@ $(document).ready(function() {
    let $clickregion = $('.click-region');
    let $new = $('#new');
    let $save = $('#save');
+   let $export = $('#export');
 
    // start game
    init(p, autoSave, "Hello, World!");
@@ -212,6 +213,24 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
+   $export.click(function(e) {
+      e.preventDefault();
+      p.saveToLocal();
+
+      // setup file
+      let exportSave = document.createElement('a');
+      exportSave.style.visibility = "hidden";
+      exportSave.setAttribute('href', p.exportSave());
+      exportSave.setAttribute('download', 'code-clicker-save.json');
+
+      // execute download
+      document.body.appendChild(exportSave);
+      exportSave.click();
+      document.body.removeChild(exportSave);
+
+      appendMessage(p, "<span class='green'>Downloading save file.</span>");
+   });
+
    // $('.autoclick').click(function(e) {
    //    e.preventDefault();
    //    if(p.autoClick) {
@@ -226,17 +245,6 @@ $(document).ready(function() {
    // $('.clickrate').click(function(e) {
    //    e.preventDefault();
    //    p.addClickRate();
-   // });
-
-   // $('#export').click(function(e) {
-   //    let exportSave = document.createElement('a');
-   //    exportSave.style.visibility = "hidden";
-   //    exportSave.setAttribute('href', p.exportSave());
-   //    exportSave.setAttribute('download', 'code-clicker-save.json');
-   //    document.body.appendChild(exportSave);
-   //    exportSave.click();
-   //    appendMessage(p, "<span class='green'>Downloading save file.</span>");
-   //    document.body.removeChild(exportSave);
    // });
 
    // $('.clear').click(function(e) {
