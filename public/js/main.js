@@ -294,6 +294,9 @@ function init(p, autoSave, welcome) {
    updateMoney(p);
 
    // initialize autosave and run every 30 sec
+   if(autoSave) {
+      clearInterval(autoSave);
+   }
    autoSave = setInterval(function() {
       p.saveToLocal();
    }, 30000);
@@ -334,7 +337,7 @@ function updateSkills(p) {
    let i = 1;
    for(let key in p.skills) {
       if(p.skills.hasOwnProperty(key)) {
-         let price = (Math.log(i)/2*800).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+         let price = (Math.log(i)/2*400).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
          let canAfford = (p.money < price) || p.skills[key];
          $('#skills').append('<li><a href="#" disabled="' + canAfford +'" skill="' + key + '">' + key + ' ($' + price + ')</a></li>')
          i++;
