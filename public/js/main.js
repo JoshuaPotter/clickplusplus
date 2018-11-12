@@ -28,11 +28,14 @@ class Player {
          "CSS": false,
          "JavaScript": false,
          "Python": false,
-         "MySQL": false,
+         "R": false,
+         "SQL": false,
          "PHP": false,
          "C++": false,
          "Java": false,
-         "Assembly": false    // ugh 🙄
+         "Ruby": false,
+         "Assembly": false,   // ugh 🙄
+         "Fortran": false,
       }
    }
 
@@ -125,7 +128,12 @@ class Player {
       this.clickRate = p.playerClickRate;
       this.money = p.playerMoney;
       this.autoClick = p.playerAutoClickStatus;
-      this.skills = p.playerSkills;
+      for(let key in p.playerSkills) {
+         let skills = this.skills;
+         let pSkills = p.playerSkills;
+         skills[key] = pSkills[key];
+         this.skills = skills;
+      }
       this.saveToLocal();
       // console.log('load', this);
    }
@@ -195,7 +203,6 @@ $(document).ready(function() {
    let $new = $('#new');
    let $save = $('#save');
    let $export = $('#export');
-   let $import = $('#import');
 
    // start game
    init(p, autoSave, "Hello, World!");
@@ -248,7 +255,7 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Downloading save file.</span>");
    });
 
-   $import.on('change', function() {
+   $(document).on('change', '#import', function() {
       let file = this.files[0];
       if(!file) {
          return false;
