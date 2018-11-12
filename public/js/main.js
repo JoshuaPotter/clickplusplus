@@ -367,7 +367,7 @@ function updateSkills(p) {
    $('#skills').html('');
    let i = 1;
    for(let key in p.skills) {
-      let price = (Math.log(i)/2*40).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      let price = (Math.log(i)/2*20).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       let disabled = (p.money < price) || p.skills[key];
       if(disabled) {
          // disabled
