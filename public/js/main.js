@@ -128,7 +128,7 @@ class Player {
       this.clickRate = p.playerClickRate;
       this.money = p.playerMoney;
       this.autoClick = p.playerAutoClickStatus;
-      for(let key in p.playerSkills) {
+      for(let key in this.skills) {
          let skills = this.skills;
          let pSkills = p.playerSkills;
          skills[key] = pSkills[key];
@@ -278,9 +278,11 @@ $(document).ready(function() {
    $('#autocode').click(function() {
       if(p.autoClick) {
          p.autoClick = false;
+         $(this).attr('disabled', true);
          appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
       } else {
          p.autoClick = true;
+         $(this).removeAttr('disabled');
          appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
       }
    });
@@ -332,6 +334,12 @@ function init(p, autoSave, welcome) {
 
    // initialize store
    updateSkills(p);
+   console.log(p.autoClick);
+   if(p.autoClick) {
+      $('#autocode').removeAttr('disabled');
+   } else {
+      $('#autocode').attr('disabled', true);
+   }
 
    console.log("Running...");
    appendMessage(p, "Click to start programming...");
@@ -359,6 +367,7 @@ function printLines(p) {
 
 function updateMoney(p) {
    $('.money').html("$" + p.money.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+   $('.money-multiplier').html(p.numSkills() + "x");
 }
 
 function updateSkills(p) {

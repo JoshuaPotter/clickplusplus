@@ -15,7 +15,7 @@ body {
                margin: -20px -20px 15px;
                font-size: 13px;
                text-align: center;
-               padding: 8px 6px;
+               padding: 9px 6px 8px;
                background: $window-menu;
                opacity: .75;
                border-bottom: 1px solid darken($window-menu, 10%);
@@ -31,9 +31,13 @@ body {
             height: 12px;
             background: #afafaf;
             border-radius: 100%;
-            margin: 7px 8px;
+            margin: 8px 8px 7px;
             background: $red;
             border: 1px solid darken($red, 22%);
+            &:hover {
+               background: darken($red, 15%);
+               border: 1px solid darken($red, 30%);
+            }
          }
       }
       #window {

@@ -84,20 +84,22 @@
 
    h3 {
       font-size: 20px;
-      margin: 20px 0 0;
+      margin: 15px 0 5px;
       line-height: 1.4;
       padding-top: 15px;
       border-top: 1px solid #d4d4d4;
+
       &:first-of-type {
          border-top: 0;
          padding-top: 0;
-         margin: 15px 0 0 0;
+         margin-top: 15px;
       }
    }
 
    p {
-      margin: 0 0 20px;
+      margin: 0 0 15px;
       font-size: 14px;
+      line-height: 1.6;
    }
 
    ul {
@@ -132,6 +134,30 @@
                background: transparent;
                opacity: .4;
                cursor: default;
+            }
+         }
+         #autocode {
+            color: #ffffff;
+            border-color: $green;
+            background: $green;
+
+            &:hover {
+               background: transparent;
+               color: $green;
+            }
+
+            &[disabled] {
+               opacity: 1;
+               color: #ffffff;
+               border-color: $red;
+               background: $red;
+
+               &:hover {
+                  cursor: pointer;
+                  color: $red;
+                  border-color: $red;
+                  background: transparent;
+               }
             }
          }
       }

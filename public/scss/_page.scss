@@ -78,6 +78,17 @@ body {
          }
       }
    }
+   span {
+      &.green {
+         color: $green;
+      }
+      &.red {
+         color: $red;
+      }
+      &.yellow {
+         color: $yellow;
+      }
+   }
 }
 .clearfix:after {
    content: "";
