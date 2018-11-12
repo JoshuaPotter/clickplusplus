@@ -49,6 +49,10 @@ body {
          overflow: hidden;
          box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 22px 40px -4px rgba(0,0,0,0.36), 0 0 0 1px rgba(0, 0, 0, 0.3);
          border: 1px solid $window-menu;
+         @media all and (max-width: 992px) {
+            height: calc(100vh - 40px);
+            min-width: initial;
+         }
       
          nav {
             padding: 0 5px;
