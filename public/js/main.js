@@ -135,7 +135,6 @@ class Player {
          this.skills = skills;
       }
       this.saveToLocal();
-      // console.log('load', this);
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -363,7 +362,6 @@ function updateMoney(p) {
 }
 
 function updateSkills(p) {
-   console.log("Update skills");
    $('#skills').html('');
    let i = 1;
    for(let key in p.skills) {
