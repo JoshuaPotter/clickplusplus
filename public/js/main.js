@@ -24,14 +24,15 @@ class Player {
       // set playerskills
       // ordered by price, low to high
       this.playerSkills = {
-         "HTML": true, // always true, base skill
+         "HTML": true,        // always true, base skill
          "CSS": false,
          "JavaScript": false,
          "Python": false,
-         "PHP": false,
          "MySQL": false,
-         "C++": false, 
+         "PHP": false,
+         "C++": false,
          "Java": false,
+         "Assembly": false    // ugh 🙄
       }
    }
 
@@ -104,6 +105,17 @@ class Player {
       this.playerSkills = newSkills;
    }
 
+   numSkills() {
+      let length = 0;
+      let skills = this.skills;
+      for(let key in skills) {
+         if(skills[key] == true) {
+            length += 1;
+         }
+      }
+      return length;
+   }
+
    // Save & Load
    load(p) {
       this.adjective = p.playerAdjective;
@@ -115,7 +127,7 @@ class Player {
       this.autoClick = p.playerAutoClickStatus;
       this.skills = p.playerSkills;
       this.saveToLocal();
-      console.log('load', this);
+      // console.log('load', this);
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -166,7 +178,6 @@ class Player {
       for(let key in this.skills) {
          if(this.skills[key] == true) {
             modifier++;
-            // console.log(key + " " + this.skills[key]);
          }
       }
       return modifier;
@@ -184,6 +195,7 @@ $(document).ready(function() {
    let $new = $('#new');
    let $save = $('#save');
    let $export = $('#export');
+   let $import = $('#import');
 
    // start game
    init(p, autoSave, "Hello, World!");
@@ -196,12 +208,14 @@ $(document).ready(function() {
       updateSkills(p);
    });
 
-   $new.click(function(e) {
-      e.preventDefault();
+   $new.click(function() {
       let c = confirm("Starting a new game will delete your current progress.")
 
       if(c) {
          // create new player object and flush cache
+         if(p.autoClick) {
+            p.autoClick = false;
+         }
          localStorage.removeItem("player");
          p = new Player();
 
@@ -212,14 +226,12 @@ $(document).ready(function() {
       }
    });
 
-   $save.click(function(e) {
-      e.preventDefault();
+   $save.click(function() {
       p.saveToLocal();
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
-   $export.click(function(e) {
-      e.preventDefault();
+   $export.click(function() {
       p.saveToLocal();
 
       // setup file
@@ -236,7 +248,7 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Downloading save file.</span>");
    });
 
-   $('#import-input').on('change', function() {
+   $import.on('change', function() {
       let file = this.files[0];
       if(!file) {
          return false;
@@ -246,7 +258,6 @@ $(document).ready(function() {
 
       fr.onload = function(e) {
          let result = JSON.parse(e.target.result);
-         console.log("imported file", result);
          p.load(result);
 
          // prepare new window
@@ -258,14 +269,28 @@ $(document).ready(function() {
       fr.readAsText(file);
    })
 
-   $('#autocode').click(function(e) {
-      e.preventDefault();
+   $('#autocode').click(function() {
       if(p.autoClick) {
          p.autoClick = false;
          appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
       } else {
          p.autoClick = true;
          appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
+      }
+   });
+
+   // buy skill
+   $(document).on('click', '.skill', function(){
+      if($(this).attr('disabled') != "disabled") {
+         let skill = $(this).attr('data-skill');
+         if(skill) {
+            let skills = p.skills;
+            skills[skill] = true;
+            p.skills = skills;
+            appendMessage(p, "You have unlocked " + skill + "! Your pay per click is multiplied by " + p.numSkills() + ".");
+            updateSkills(p);
+            p.money -= $(this).attr('data-price');
+         }
       }
    });
    
@@ -294,9 +319,7 @@ function init(p, autoSave, welcome) {
    updateMoney(p);
 
    // initialize autosave and run every 30 sec
-   if(autoSave) {
-      clearInterval(autoSave);
-   }
+   clearInterval(autoSave);
    autoSave = setInterval(function() {
       p.saveToLocal();
    }, 30000);
@@ -333,14 +356,18 @@ function updateMoney(p) {
 }
 
 function updateSkills(p) {
+   console.log("Update skills");
    $('#skills').html('');
    let i = 1;
    for(let key in p.skills) {
-      if(p.skills.hasOwnProperty(key)) {
-         let price = (Math.log(i)/2*400).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-         let canAfford = (p.money < price) || p.skills[key];
-         $('#skills').append('<li><a href="#" disabled="' + canAfford +'" skill="' + key + '">' + key + ' ($' + price + ')</a></li>')
-         i++;
+      let price = (Math.log(i)/2*40).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      let disabled = (p.money < price) || p.skills[key];
+      if(disabled) {
+         // disabled
+         $('#skills').append('<li><a href="#" class="skill" disabled data-skill="' + key + '" data-price="' + price + '">' + key + ' ($' + price + ')</a></li>');
+      } else {
+         $('#skills').append('<li><a href="#" class="skill" data-skill="' + key + '" data-price="' + price + '">' + key + ' ($' + price + ')</a></li>');
       }
+      i++;
    }
 }

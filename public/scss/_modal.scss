@@ -126,7 +126,7 @@
                color: $green;
                background: transparent;
             }
-            &[disabled="true"] {
+            &[disabled] {
                border-color: #1d1d1d;
                color: #1d1d1d;
                background: transparent;
