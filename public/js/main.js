@@ -18,8 +18,8 @@ class Player {
       this.playerMoney = 0;  
 
       // set autoclick
-      this.playerAutoClickStatus = false;
-      this.playerAutoClick; // interval container
+      this.playerAutoClick = false;
+      this.playerAutoClickInterval; // interval container
 
       // set playerskills
       // ordered by price, low to high
@@ -39,7 +39,7 @@ class Player {
       }
    }
 
-   // Getters & Setters
+   // getters & setters
    get adjective() {
       return this.playerAdjective;
    }
@@ -83,22 +83,22 @@ class Player {
    }
 
    get autoClick() {
-      return this.playerAutoClickStatus;
+      return this.playerAutoClick;
    }
    set autoClick(newAutoClick) {
-      if(newAutoClick == true && this.playerAutoClickStatus == false) {
+      if(newAutoClick == true && this.playerAutoClick == false) {
          $('.autoclick').html('AutoCode (✔)');
          let p = this;
-         p.playerAutoClick = setInterval(function() {
+         p.playerAutoClickInterval = setInterval(function() {
             p.addPoint();
             printLines(p);
             updateMoney(p);
          }, 5000);
       } else if (newAutoClick == false) {
          $('.autoclick').html('AutoCode');
-         clearInterval(this.playerAutoClick);
+         clearInterval(this.playerAutoClickInterval);
       }
-      this.playerAutoClickStatus = newAutoClick;
+      this.playerAutoClick = newAutoClick;
    }
 
    get skills() {
@@ -121,20 +121,23 @@ class Player {
 
    // Save & Load
    load(p) {
-      this.adjective = p.playerAdjective;
-      this.noun = p.playerNoun;
-      this.points = p.playerPoints;
-      this.level = p.playerLevel;
-      this.clickRate = p.playerClickRate;
-      this.money = p.playerMoney;
-      this.autoClick = p.playerAutoClickStatus;
-      for(let key in this.skills) {
-         let skills = this.skills;
-         let pSkills = p.playerSkills;
-         skills[key] = pSkills[key];
-         this.skills = skills;
-      }
+      console.log(this);
+
+      Object.keys(p).forEach(function(key) {
+         // for each property in the save file, instantiate it in
+         //   the player object if the property exists
+         let basicKey = key.replace("player", "");
+         basicKey = basicKey.charAt(0).toLowerCase() + basicKey.slice(1);
+         console.log(basicKey + ", " + key);
+         if(this.hasOwnProperty(key)) {
+            console.log(this[basicKey] + ", " + p[key]);
+            this[basicKey] = p[key];
+         }
+      }, this);
+
       this.saveToLocal();
+
+      console.log(this);
    }
    saveToLocal() {
       // convert player object to string and save to localStorage
@@ -155,12 +158,13 @@ class Player {
       }
    }
    exportSave() {
+      // create file with json payload for download
       let save = 'data:application/json;charset=utf-8,'+ encodeURIComponent(JSON.stringify(this));
       return save;
    }
 
-   // Increment Functions
    addPoint() {
+      // increment points and money
       this.points += this.clickRate;
       this.money += (this.clickRate/100) * this.skillModifier();
 
@@ -171,10 +175,12 @@ class Player {
       }
    }
    addLevel() {
+      // increment level
       this.level += 1;
       appendMessage(this, "<span class='green'>You leveled up! Level: " + this.level + "</span>");
    }
    addClickRate() {
+      // incremement clickrate
       this.clickRate += 1;
       appendMessage(this, "<span class='green'>Click rate increased! +" + this.clickRate + " per click.</span>")
    }
@@ -206,7 +212,7 @@ $(document).ready(function() {
    // start game
    init(p, autoSave, "Hello, World!");
 
-   // user initialized events
+   // click event
    $clickregion.click(function() {
       p.addPoint();
       printLines(p);
@@ -214,6 +220,7 @@ $(document).ready(function() {
       updateSkills(p);
    });
 
+   // create new game
    $new.click(function() {
       let c = confirm("Starting a new game will delete your current progress.")
 
@@ -232,11 +239,13 @@ $(document).ready(function() {
       }
    });
 
+   // save progress to browser
    $save.click(function() {
       p.saveToLocal();
       appendMessage(p, "<span class='green'>Game saved.</span>");
    });
 
+   // download save file
    $export.click(function() {
       p.saveToLocal();
 
@@ -254,6 +263,7 @@ $(document).ready(function() {
       appendMessage(p, "<span class='green'>Downloading save file.</span>");
    });
 
+   // load save file on file selection
    $(document).on('change', '#import', function() {
       let file = this.files[0];
       if(!file) {
@@ -275,18 +285,6 @@ $(document).ready(function() {
       fr.readAsText(file);
    })
 
-   $('#autocode').click(function() {
-      if(p.autoClick) {
-         p.autoClick = false;
-         $(this).attr('disabled', true);
-         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
-      } else {
-         p.autoClick = true;
-         $(this).removeAttr('disabled');
-         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
-      }
-   });
-
    // buy skill
    $(document).on('click', '.skill', function(){
       if($(this).attr('disabled') != "disabled") {
@@ -298,21 +296,23 @@ $(document).ready(function() {
             appendMessage(p, "You have unlocked " + skill + "! Your pay per click is multiplied by " + p.numSkills() + ".");
             updateSkills(p);
             p.money -= $(this).attr('data-price');
+            updateMoney(p);
          }
       }
    });
-   
-   // $('.clickrate').click(function(e) {
-   //    e.preventDefault();
-   //    p.addClickRate();
-   // });
 
-   // $('.clear').click(function(e) {
-   //    e.preventDefault();
-   //    clearMessages(p);
-   //    appendMessage(p, "<span class='green'>Window cleared.</span>");
-   // });
-
+   // autocode button
+   $('#autocode').click(function() {
+      if(p.autoClick) {
+         p.autoClick = false;
+         $(this).attr('disabled', true);
+         appendMessage(p, "<span class='red'>Disabling AutoCode</span>");
+      } else {
+         p.autoClick = true;
+         $(this).removeAttr('disabled');
+         appendMessage(p, "<span class='green'>Enabling AutoCode</span>");
+      }
+   });
 });
 
 function init(p, autoSave, welcome) {
@@ -332,9 +332,10 @@ function init(p, autoSave, welcome) {
       p.saveToLocal();
    }, 30000);
 
-   // initialize store
+   // initialize skills
    updateSkills(p);
-   console.log(p.autoClick);
+
+   // initialize autoclick
    if(p.autoClick) {
       $('#autocode').removeAttr('disabled');
    } else {
@@ -348,7 +349,7 @@ function init(p, autoSave, welcome) {
 function appendMessage(p, message, window = $('#messages')) {
    let parentNode = document.getElementById("messages");
    if(parentNode.hasChildNodes()) {
-      // start removing messages at the top of stack
+      // for each line appended, remove a line if we have printed more than 150
       if(parentNode.childNodes.length > 150) {
          parentNode.removeChild(parentNode.childNodes[0]);
       }
@@ -371,10 +372,10 @@ function updateMoney(p) {
 }
 
 function updateSkills(p) {
-   $('#skills').html('');
    let i = 1;
+   $('#skills').html('');
    for(let key in p.skills) {
-      let price = (Math.log(i)/2*20).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      let price = (Math.log(i)).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
       let disabled = (p.money < price) || p.skills[key];
       if(disabled) {
          // disabled
